@@ -15,6 +15,20 @@ class PlayerHashMap:
         else:
             return Player.hash(key) % self._size
 
+    def display(self) -> List[str]:
+        all_players = []
+
+        for index, player_list in enumerate(self._hash_table):
+            # check if player list has any node
+            if player_list.head or player_list.tail:
+                info_list = player_list.display()
+                players_of_each_play_list = f"{index}: "
+                for info in info_list:
+                    players_of_each_play_list += info + " | "
+                all_players.append(players_of_each_play_list)
+
+        return all_players
+
     def __getitem__(self, uid: str) -> Tuple[int, Player] | None:
         index = self.get_index(uid)
         player_node = self._hash_table[index].get_player_node_by_key(uid)
