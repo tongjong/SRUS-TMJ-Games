@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 from app.player import Player
 from app.player_list import PlayerList
 from app.player_node import PlayerNode
@@ -14,6 +14,11 @@ class PlayerHashMap:
             return hash(key) % self._size
         else:
             return Player.hash(key) % self._size
+
+    def __getitem__(self, uid: str) -> Tuple[int, Player] | None:
+        index = self.get_index(uid)
+        player_node = self._hash_table[index].get_player_node_by_key(uid)
+        return (index, player_node.player) if player_node else None
 
     def __setitem__(self, uid: str, name: str) -> None:
         player_list = self._hash_table[self.get_index(uid)]
