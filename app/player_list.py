@@ -4,10 +4,15 @@ from app.player_node import PlayerNode
 class PlayerList:
     def __init__(self):
         self._head = None
+        self._tail = None
 
     @property
     def head(self):
         return self._head
+
+    @property
+    def tail(self):
+        return self._tail
 
     def add_at_head(self, player_node: PlayerNode) -> None:
         if self._is_empty():
@@ -15,7 +20,10 @@ class PlayerList:
         else:
             player_node.next_node = self._head
             self._head.prev_node = player_node
+            # when there is only one node in the list
+            if not self._tail:
+                self._tail = self._head
             self._head = player_node
 
     def _is_empty(self) -> bool:
-        return self._head is None
+        return self._head is None and self._tail is None
