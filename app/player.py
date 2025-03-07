@@ -10,3 +10,6 @@ class Player:
     @property
     def name(self):
         return self._name
+
+    def __str__(self):
+        return f'Unique Id: {self.uid}, Player Name: {self.name}'

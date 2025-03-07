@@ -1,3 +1,5 @@
+from typing import List
+
 from app.player_node import PlayerNode
 
 class EmptyListException(Exception):
@@ -83,6 +85,17 @@ class PlayerList:
             node_before.next_node = node_after
             node_after.prev_node = node_before
 
+    def display(self, forward : bool= True) -> List[str]:
+        if not self._head and forward:
+            return [str(self.tail.player)]
+        elif not self._tail and not forward:
+            return [str(self.head.player)]
+        else:
+            if forward:
+                return self._display_forward()
+            else:
+                return self._display_backward()
+
     def get_player_node_by_key(self, key) -> PlayerNode | None:
         if not self._tail and not self._head:
             return None
@@ -101,3 +114,36 @@ class PlayerList:
 
     def _is_empty(self) -> bool:
         return self._head is None and self._tail is None
+
+    def _display_forward(self) -> List[str]:
+        players = []
+        current_node = self._head
+        while current_node:
+            players.append(str(current_node.player))
+            current_node = current_node.next_node
+        return players
+
+    def _display_backward(self) -> List[str]:
+        players = []
+        current_node = self._tail
+        while current_node:
+            players.append(str(current_node.player))
+            current_node = current_node.prev_node
+        return players
+
+    def __len__(self) -> int:
+        if not self._head and not self._tail:
+            return 0
+
+        count = 0
+        if self._head:
+            current_node = self._head
+            while current_node:
+                count += 1
+                current_node = current_node.next_node
+        elif self._tail:
+            current_node = self._tail
+            while current_node:
+                count += 1
+                current_node = current_node.prev_node
+        return count
