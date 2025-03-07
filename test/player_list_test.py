@@ -45,3 +45,18 @@ class TestPlayerList(unittest.TestCase):
         self.assertEqual(self.player_node_2.prev_node, self.player_node_3)
         self.assertEqual(self.player_node_1.prev_node, self.player_node_2)
         self.assertEqual(self.player_node_3.next_node, self.player_node_2)
+
+    def test_add_at_tail_when_player_list_empty(self):
+        self.player_list.add_at_tail(self.player_node_1)
+
+        self.assertEqual(self.player_list.tail, self.player_node_1)
+        self.assertIsNone(self.player_list.head)
+
+    def test_add_at_tail_when_player_list_not_empty(self):
+        self.player_list.add_at_tail(self.player_node_1)
+        self.player_list.add_at_tail(self.player_node_2)
+
+        self.assertEqual(self.player_list.tail, self.player_node_2)
+        self.assertEqual(self.player_list.head, self.player_node_1)
+        self.assertEqual(self.player_node_2.prev_node, self.player_node_1)
+        self.assertEqual(self.player_node_1.next_node, self.player_node_2)

@@ -25,5 +25,16 @@ class PlayerList:
                 self._tail = self._head
             self._head = player_node
 
+    def add_at_tail(self, player_node : PlayerNode) -> None:
+        if self._is_empty():
+            self._tail = player_node
+        else:
+            self._tail.next_node = player_node
+            player_node.prev_node = self._tail
+            # when there is only one node in the list
+            if not self._head:
+                self._head = self._tail
+            self._tail = player_node
+
     def _is_empty(self) -> bool:
         return self._head is None and self._tail is None
