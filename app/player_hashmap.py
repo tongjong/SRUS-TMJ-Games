@@ -30,3 +30,14 @@ class PlayerHashMap:
         else:
             new_player_node = PlayerNode(Player(uid, name))
             player_list.add_at_tail(new_player_node)
+
+    def __delitem__(self, key: str) -> None:
+        player_tuple = self[key]
+        if not player_tuple:
+            raise KeyError("Player not found")
+        else:
+            index = self.get_index(key)
+            self._hash_table[index].remove_node_by_key(key)
+
+    def __len__(self) -> int:
+        return sum(len(player_list) for player_list in self._hash_table)
