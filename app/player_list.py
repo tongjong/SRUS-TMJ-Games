@@ -1,5 +1,7 @@
 from app.player_node import PlayerNode
 
+class EmptyListException(Exception):
+    pass
 
 class PlayerList:
     def __init__(self):
@@ -35,6 +37,23 @@ class PlayerList:
             if not self._head:
                 self._head = self._tail
             self._tail = player_node
+
+    def remove_at_head(self) -> None :
+        if self._is_empty():
+            raise EmptyListException("Player list is empty.")
+        # when there is only one node in the list
+        elif not self._tail:
+            self._head = None
+        # when there are 2 nodes in the list
+        elif self._head.next_node is self._tail:
+            self._tail.prev_node = None
+            self._tail.next_node = None
+            # when removing at head, we do not modify the tail
+            self._head = None
+        else:
+            new_head = self._head.next_node
+            new_head.prev_node = None
+            self._head = new_head
 
     def _is_empty(self) -> bool:
         return self._head is None and self._tail is None

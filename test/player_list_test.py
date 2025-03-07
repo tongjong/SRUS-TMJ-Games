@@ -1,6 +1,6 @@
 import unittest
 from app.player import Player
-from app.player_list import PlayerList
+from app.player_list import PlayerList, EmptyListException
 from app.player_node import PlayerNode
 
 
@@ -60,3 +60,37 @@ class TestPlayerList(unittest.TestCase):
         self.assertEqual(self.player_list.head, self.player_node_1)
         self.assertEqual(self.player_node_2.prev_node, self.player_node_1)
         self.assertEqual(self.player_node_1.next_node, self.player_node_2)
+
+    def test_remove_at_head_when_player_list_empty(self):
+        with self.assertRaises(EmptyListException) as ex:
+            self.player_list.remove_at_head()
+
+        self.assertEqual(type(ex.exception), EmptyListException)
+        self.assertEqual(ex.exception.args[0], "Player list is empty.")
+
+    def test_remove_at_head_when_player_list_has_one_player_node(self):
+        self.player_list.add_at_head(self.player_node_1)
+        self.player_list.remove_at_head()
+
+        self.assertIsNone(self.player_list.head)
+        self.assertIsNone(self.player_list.tail)
+
+    def test_remove_at_head_when_player_list_has_two_player_nodes(self):
+        self.player_list.add_at_head(self.player_node_1)
+        self.player_list.add_at_head(self.player_node_2)
+        self.player_list.remove_at_head()
+
+        self.assertEqual(self.player_list.tail, self.player_node_1)
+        self.assertIsNone(self.player_list.tail.prev_node)
+        self.assertIsNone(self.player_list.tail.next_node)
+        self.assertIsNone(self.player_list.head)
+
+    def test_remove_at_head_when_player_list_has_more_than_two_player_nodes(self):
+        self.player_list.add_at_head(self.player_node_1)
+        self.player_list.add_at_head(self.player_node_2)
+        self.player_list.add_at_head(self.player_node_3)
+        self.player_list.remove_at_head()
+
+        self.assertEqual(self.player_list.head, self.player_node_2)
+        self.assertEqual(self.player_list.tail, self.player_node_1)
+        self.assertIsNone(self.player_list.head.prev_node)
