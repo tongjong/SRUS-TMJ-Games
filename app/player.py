@@ -18,6 +18,10 @@ class Player:
     def name(self):
         return self._name
 
+    @name.setter
+    def name(self, name):
+        self._name = name
+
     @classmethod
     def hash(cls, key: str) -> int:
         byte_values = bytes(key, encoding='utf8')
