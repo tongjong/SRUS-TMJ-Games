@@ -129,3 +129,34 @@ class TestPlayerList(unittest.TestCase):
         self.assertEqual(self.player_list.tail, self.player_node_2)
         self.assertIsNone(self.player_list.head.prev_node)
         self.assertIsNone(self.player_list.tail.next_node)
+
+    def test_remove_node_by_key_when_node_is_the_head(self):
+        self.player_list.add_at_head(self.player_node_1)
+        self.player_list.add_at_head(self.player_node_2)
+        self.player_list.add_at_head(self.player_node_3)
+        self.player_list.remove_node_by_key("3")
+
+        self.assertEqual(self.player_list.head, self.player_node_2)
+        self.assertEqual(self.player_list.tail, self.player_node_1)
+        self.assertEqual(self.player_list.head.prev_node, None)
+
+    def test_remove_node_by_key_when_node_is_the_tail(self):
+        self.player_list.add_at_head(self.player_node_1)
+        self.player_list.add_at_head(self.player_node_2)
+        self.player_list.add_at_head(self.player_node_3)
+        self.player_list.remove_node_by_key("1")
+
+        self.assertEqual(self.player_list.head, self.player_node_3)
+        self.assertEqual(self.player_list.tail, self.player_node_2)
+        self.assertEqual(self.player_list.tail.next_node, None)
+
+    def test_remove_node_by_key_when_node_is_in_the_middle(self):
+        self.player_list.add_at_head(self.player_node_1)
+        self.player_list.add_at_head(self.player_node_2)
+        self.player_list.add_at_head(self.player_node_3)
+        self.player_list.remove_node_by_key("2")
+
+        self.assertEqual(self.player_list.head, self.player_node_3)
+        self.assertEqual(self.player_list.tail, self.player_node_1)
+        self.assertEqual(self.player_list.head.next_node, self.player_node_1)
+        self.assertEqual(self.player_list.tail.prev_node, self.player_node_3)
