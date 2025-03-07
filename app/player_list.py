@@ -55,5 +55,21 @@ class PlayerList:
             new_head.prev_node = None
             self._head = new_head
 
+    def remove_at_tail(self) -> None :
+        if self._is_empty():
+            raise EmptyListException("Player list is empty.")
+        # when there is only one node in the list
+        elif not self._head:
+            self._tail = None
+        # when there are 2 nodes in the list
+        elif self._tail.prev_node is self._head:
+            self._head.next_node = None
+            # when removing at tail, we do not modify the head
+            self._tail = None
+        else:
+            new_tail = self._tail.prev_node
+            new_tail.next_node = None
+            self._tail = new_tail
+
     def _is_empty(self) -> bool:
         return self._head is None and self._tail is None
