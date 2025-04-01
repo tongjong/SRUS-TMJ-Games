@@ -303,20 +303,57 @@ Create a test case that tries to sort 1000 players that are already sorted.
 If you get a failure, include the failure below:
 
 ```text
-YOUR FAILURE HERE
+FAILED (errors=1)
+
+Error
+Traceback (most recent call last):
+  File "C:\Users\Tong\Desktop\python-2025\assignments\SRUS-TMJ-Games\test\player_test.py", line 50, in test_sort_with_sorted_list_with_1000_players
+    sorted_players_using_custom_alg = Player.sort(players)
+                                      ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Desktop\python-2025\assignments\SRUS-TMJ-Games\app\player.py", line 71, in sort
+    return cls.sort(left, descend) + [pivot] + cls.sort(right, descend)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Desktop\python-2025\assignments\SRUS-TMJ-Games\app\player.py", line 71, in sort
+    return cls.sort(left, descend) + [pivot] + cls.sort(right, descend)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Desktop\python-2025\assignments\SRUS-TMJ-Games\app\player.py", line 71, in sort
+    return cls.sort(left, descend) + [pivot] + cls.sort(right, descend)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 983 more times]
+  File "C:\Users\Tong\Desktop\python-2025\assignments\SRUS-TMJ-Games\app\player.py", line 66, in sort
+    if x.score > pivot.score:
+       ^^^^^^^
+RecursionError: maximum recursion depth exceeded
 ```
 
 Provide a reason why this test failed (if you got recursion errors, you need to explain **why** they occurred).
 
 If your implementation did not fail, you must explain what changes you made to the original algorithm given by the senior developer to ensure that it did not fail.
 
-> Answer here
-
+> The error is due to the sort function recursively calls itself too many times exceeding the stack flow. Currently, there is no check to determine if the list is already sorted, resulting in returning the very same array over and over, causing the stack overflow.
 Propose a fix to your sorting algorithm that fixes this issue.
 
 ```python
-# YOUR FIX HERE
-# Highlight what the fix was
+list_sorted = False
+        index = 0
+
+        while index < len(arr) - 1:
+            if descend:
+                if arr[index] > arr[index + 1]:
+                    list_sorted = True
+                else:
+                    list_sorted = False
+                    break
+            else:
+                if arr[index] < arr[index + 1]:
+                    list_sorted = True
+                else:
+                    list_sorted = False
+                    break
+            index += 1
+
+        if list_sorted or len(arr) <= 1:
+            return arr
 ```
 
 #### 5.3.5. Success criteria
@@ -329,13 +366,7 @@ Propose a fix to your sorting algorithm that fixes this issue.
 Complete the following snippet before you submit:
 
 ```text
-I, <name and student number>, completed this work in class <room number>, on <date>, under the supervision of <assessor's name>.
-```
-
-Or (if not completed in class):
-
-```text
-I, <name and student number>, completed this work outside of the scheduled hours. I emailed <assessors name>, on <date>, along with my documented reason for non-attendance, and have scheduled a time to meet to discuss my work.
+I, <Tong Jong and J155917>, partially completed this work in class 306,under the supervision of Rafael Avigad, and partially completed it at home on 1/4/25.
 
 I understand that until I meet my assessor to confirm that this work is a valid and true representation of my abilities to write and debug a sorting algorithm in Python, this submission cannot be considered complete.
 

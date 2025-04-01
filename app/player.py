@@ -50,23 +50,46 @@ class Player:
 
     @classmethod
     def sort(cls, arr: list["Player"], descend=True):
-        if len(arr) <= 1:
+        list_sorted = False
+        index = 0
+
+        while index < len(arr) - 1:
+            if descend:
+                if arr[index] > arr[index + 1]:
+                    list_sorted = True
+                else:
+                    list_sorted = False
+                    break
+            else:
+                if arr[index] < arr[index + 1]:
+                    list_sorted = True
+                else:
+                    list_sorted = False
+                    break
+            index += 1
+
+        if list_sorted or len(arr) <= 1:
             return arr
+
         pivot = arr[0]
         left = []
         right = []
 
         for x in arr[1:]:
             if descend is False:
-                if x.score < pivot.score:
+                if x < pivot:
                     left.append(x)
                 else:
                     right.append(x)
             else:
-                if x.score > pivot.score:
+                if x > pivot:
                     left.append(x)
                 else:
                     right.append(x)
+        if len(left) == 0:
+            return [pivot] + cls.sort(right, descend)
+        elif len(right) == 0:
+            return cls.sort(left, descend) + [pivot]
 
         return cls.sort(left, descend) + [pivot] + cls.sort(right, descend)
 
@@ -79,11 +102,11 @@ class Player:
     def __str__(self):
         return f'Unique Id: {self.uid}, Player Name: {self.name}'
 
-    def __lt__(self, other):
+    def __lt__(self, other: 'Player') -> bool:
         return self.score < other.score
 
-    def __eq__(self, other):
-        return self.uid == other.uid
+    def __gt__(self, other: 'Player') -> bool:
+        return self.score > other.score
 
     def __repr__(self):
         class_name = type(self).__name__
