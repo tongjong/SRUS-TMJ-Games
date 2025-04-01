@@ -26,4 +26,13 @@ class TestPlayer(unittest.TestCase):
     def test_players_can_be_compared_by_score(self):
         self.assertTrue(self.alice < self.bob)
 
+    def test_sort(self):
+        sorted_players_descend = Player.sort([self.alice, self.bob, self.charlie])
+        sorted_players_ascend = Player.sort([self.alice, self.bob, self.charlie], descend=False)
+        manually_sorted_players_ascend = [self.alice, self.bob, self.charlie]
+        manually_sorted_players_descend = [self.charlie, self.bob, self.alice]
+
+        self.assertListEqual(sorted_players_ascend, manually_sorted_players_ascend)
+        self.assertListEqual(sorted_players_descend, manually_sorted_players_descend)
+
 
