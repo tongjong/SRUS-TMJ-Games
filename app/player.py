@@ -50,23 +50,7 @@ class Player:
 
     @classmethod
     def sort(cls, arr: list["Player"], descend=True):
-        list_sorted = False
-        index = 0
-
-        while index < len(arr) - 1:
-            if descend:
-                if arr[index] > arr[index + 1]:
-                    list_sorted = True
-                else:
-                    list_sorted = False
-                    break
-            else:
-                if arr[index] < arr[index + 1]:
-                    list_sorted = True
-                else:
-                    list_sorted = False
-                    break
-            index += 1
+        list_sorted = Player.is_sorted(arr, descend=descend)
 
         if list_sorted or len(arr) <= 1:
             return arr
@@ -76,22 +60,26 @@ class Player:
         right = []
 
         for x in arr[1:]:
-            if descend is False:
-                if x < pivot:
-                    left.append(x)
-                else:
-                    right.append(x)
+            if descend is False and x < pivot or descend and x > pivot:
+                left.append(x)
             else:
-                if x > pivot:
-                    left.append(x)
-                else:
-                    right.append(x)
-        if len(left) == 0:
-            return [pivot] + cls.sort(right, descend)
-        elif len(right) == 0:
-            return cls.sort(left, descend) + [pivot]
+                right.append(x)
 
         return cls.sort(left, descend) + [pivot] + cls.sort(right, descend)
+
+    @staticmethod
+    def is_sorted(arr: list["Player"], descend=True):
+        list_sorted = False
+        index = 0
+
+        while index < len(arr) - 1:
+            if descend and arr[index] > arr[index + 1] or descend is False and arr[index] < arr[index + 1]:
+                list_sorted = True
+                index += 1
+            else:
+                list_sorted = False
+                break
+        return list_sorted
 
     def __hash__(self) -> int:
         return self._pearson_hash(self._uid)
