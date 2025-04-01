@@ -48,6 +48,28 @@ class Player:
             _hash = self.pearson_table[_hash ^ each_byte]
         return _hash
 
+    @classmethod
+    def sort(cls, arr: list["Player"], descend=True):
+        if len(arr) <= 1:
+            return arr
+        pivot = arr[0]
+        left = []
+        right = []
+
+        for x in arr[1:]:
+            if descend is False:
+                if x.score < pivot.score:
+                    left.append(x)
+                else:
+                    right.append(x)
+            else:
+                if x.score > pivot.score:
+                    left.append(x)
+                else:
+                    right.append(x)
+
+        return cls.sort(left, descend) + [pivot] + cls.sort(right, descend)
+
     def __hash__(self) -> int:
         return self._pearson_hash(self._uid)
 
@@ -62,4 +84,18 @@ class Player:
 
     def __eq__(self, other):
         return self.uid == other.uid
+
+    def __repr__(self):
+        class_name = type(self).__name__
+        return f"{class_name}({self.score})"
+
+
+if __name__ == "__main__":
+    dan = Player('04', "Dan", 25)
+    alice = Player('01', "Alice", 5)
+    bob = Player('02', "Bob", 10)
+    charlie = Player('03', "Charlie", 15)
+    print(Player.sort([dan, alice, bob, charlie], descend=False))
+
+    print(Player.sort([dan, alice, bob, charlie]))
 

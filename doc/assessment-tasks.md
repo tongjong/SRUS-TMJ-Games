@@ -211,7 +211,10 @@ def sort_quickly(arr):
 
 What is the expected time and space complexity of the above algorithm? You can answer using big O or in plain English but in both cases you MUST justify your answer.
 
-> Answer here
+> The example code has big O(nlogn) time complexity and big O(n^2) in worst case scenarios where the selected pivot is less than or greater than 
+  all the other elements in the array. As there are more elements in the array, it requires to step through the list x amount of the elements till the array is sorted.
+  so the put through the array will go up exponentially while the time goes up linearly. As we partition the array in to two each time, it will take a linear time till the 
+  array is sorted, therefore n times logn.
 
 ### 5.2. Task: Implement the custom sorting algorithm
 
@@ -226,7 +229,26 @@ Add a separate test case to `test_player.py` to test your custom sorting algorit
 Include your code below:
 
 ```python
-# YOUR CUSTOM Sorting here
+@classmethod
+def sort(cls, arr: list["Player"]):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[0]
+    left = []
+    right = []
+    for x in arr[1:]:
+        if x.score < pivot.score:
+            left.append(x)
+        else:
+            right.append(x)
+
+    return cls.sort(left) + [pivot] + cls.sort(right)
+
+def test_sort(self):
+    sorted_players = Player.sort([self.alice, self.bob, self.charlie])
+    manually_sorted_players = [self.alice, self.bob, self.charlie]
+
+    self.assertListEqual(sorted_players, manually_sorted_players)
 ```
 
 #### 5.2.3. Success criteria
