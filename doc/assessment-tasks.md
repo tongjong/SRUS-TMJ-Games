@@ -58,7 +58,7 @@ def test_sort_players(self):
     sorted_players = sorted(players)
 
     # players must be sorted by score as shown here:
-    manually_sorted_players == [Player("Bob", uid='02', score=5), Player("Alice", uid='01', score=10), Player("Charlie", uid='03', score=15)]
+    manually_sorted_players = [Player("Bob", uid='02', score=5), Player("Alice", uid='01', score=10), Player("Charlie", uid='03', score=15)]
 
    self.assertListEqual(sorted_players, manually_sorted_players)
 
@@ -71,7 +71,20 @@ def test_sort_players(self):
 What was the outcome of running the above unit test, copy paste the output **for just this particular test** below:
 
 ```text
-Your output here
+FAILED                      [100%]
+player_test.py:12 (TestPlayer.test_sort_player)
+self = <player_test.TestPlayer testMethod=test_sort_player>
+
+    def test_sort_player(self):
+        player_1 = Player('01', "Alice", 10)
+        player_2 = Player('02', "Bob", 5)
+        player_3 = Player('03', "Charlie", 15)
+        players = [player_1, player_2, player_3]
+    
+>       sorted_players = sorted(players)
+E       TypeError: '<' not supported between instances of 'Player' and 'Player'
+
+player_test.py:19: TypeError
 ```
 
 ### 4.3. Success criteria
@@ -83,7 +96,7 @@ Your output here
 #### 4.3.1. Question
 
 The tests checks that calling sorted on a list of players will sort them by score, what is the **only** magic method that must be implemented in the player class for the `sorted` function to succeed?
-
+The magic method that must be implemented is __lt__ 
 > Answer Here
 
 #### 4.3.2. Task: Implement the magic method in the Player class
@@ -103,7 +116,15 @@ def test_players_can_be_compared_by_score(self):
 Run the test and confirm that your error resembles the previous error
 
 ```text
-INSERT ERROR OUTPUT HERE
+FAILED [100%]
+player_test.py:26 (TestPlayer.test_players_can_be_compared_by_score)
+self = <player_test.TestPlayer testMethod=test_players_can_be_compared_by_score>
+
+    def test_players_can_be_compared_by_score(self):
+>       self.assertTrue(self.alice < self.bob)
+E       TypeError: '<' not supported between instances of 'Player' and 'Player'
+
+player_test.py:28: TypeError
 ```
 
 Implement the appropriate magic method in the Player class and ensure you pass this test (and only this test!).

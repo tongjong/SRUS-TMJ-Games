@@ -6,9 +6,20 @@ class Player:
     pearson_table = list(range(256))
     random.shuffle(pearson_table)
 
-    def __init__(self, uid: str, name: str):
+    def __init__(self, uid: str, name: str, score: int = 0):
         self._uid = uid
         self._name = name
+        self._score = score
+
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, score):
+        if score < 0:
+            raise ValueError("Score must be a positive integer value.")
+        self._score = score
 
     @property
     def uid(self):
@@ -45,3 +56,7 @@ class Player:
 
     def __str__(self):
         return f'Unique Id: {self.uid}, Player Name: {self.name}'
+
+    def __lt__(self, other):
+        return self.score < other.score
+
