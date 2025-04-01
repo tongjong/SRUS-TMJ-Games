@@ -1,5 +1,6 @@
 import unittest
 from app.player import Player
+import random
 
 class TestPlayer(unittest.TestCase):
     def setUp(self):
@@ -34,5 +35,13 @@ class TestPlayer(unittest.TestCase):
 
         self.assertListEqual(sorted_players_ascend, manually_sorted_players_ascend)
         self.assertListEqual(sorted_players_descend, manually_sorted_players_descend)
+
+    def test_sort_with_1000_players(self):
+        players = [Player(f"{i:03}", f"Player {i}", score=random.randint(0, 1000)) for i in range(1000)]
+
+        sorted_players_using_custom_alg = Player.sort(players, descend=False)
+        sorted_players_using_built_in_alg = sorted(players)
+
+        self.assertListEqual(sorted_players_using_built_in_alg, sorted_players_using_custom_alg)
 
 

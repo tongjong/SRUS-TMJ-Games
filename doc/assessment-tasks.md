@@ -277,7 +277,13 @@ Using the code above as a starting point, create a test case to test your custom
 Include your test case below:
 
 ```python
+  def test_sort_with_1000_players(self):
+        players = [Player(f"{i:03}", f"Player {i}", score=random.randint(0, 1000)) for i in range(1000)]
 
+        sorted_players_using_custom_alg = Player.sort(players, descend=False)
+        sorted_players_using_built_in_alg = sorted(players)
+
+        self.assertListEqual(sorted_players_using_built_in_alg, sorted_players_using_custom_alg)
 ```
 
 #### 5.3.2. Success criteria
