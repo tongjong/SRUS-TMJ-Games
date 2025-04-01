@@ -44,4 +44,10 @@ class TestPlayer(unittest.TestCase):
 
         self.assertListEqual(sorted_players_using_built_in_alg, sorted_players_using_custom_alg)
 
+    def test_sort_with_sorted_list_with_1000_players(self):
+        players = [Player(f"{i:03}", f"Player {i}", score=i) for i in range(1000)]
+
+        Player.sort(players)
+
+
 
