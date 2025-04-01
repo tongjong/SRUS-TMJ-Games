@@ -60,3 +60,6 @@ class Player:
     def __lt__(self, other):
         return self.score < other.score
 
+    def __eq__(self, other):
+        return self.uid == other.uid
+

@@ -142,12 +142,41 @@ Implement the appropriate magic method in the Player class and ensure you pass t
 Rerun `test_sort_players` does the test pass? If not, include the output below:
 
 ```text
-Your output here
+FAILED                      [100%]
+player_test.py:17 (TestPlayer.test_sort_player)
+self = <player_test.TestPlayer testMethod=test_sort_player>
+
+    def test_sort_player(self):
+    
+        players = [self.alice, self.bob, self.charlie]
+        manually_sorted_players = [self.bob, self.alice, self.charlie]
+    
+        sorted_players = sorted(players)
+    
+>       self.assertListEqual(sorted_players, manually_sorted_players)
+E       AssertionError: Lists differ: [<app[33 chars]8F007D5A90>, <app.player.Player object at 0x00[61 chars]5D0>] != [<app[33 chars]8F00772710>, <app.player.Player object at 0x00[61 chars]5D0>]
+E       
+E       First differing element 0:
+E       <app.player.Player object at 0x0000028F007D5A90>
+E       <app.player.Player object at 0x0000028F00772710>
+E       
+E       - [<app.player.Player object at 0x0000028F007D5A90>,
+E       -  <app.player.Player object at 0x0000028F00772710>,
+E       ? ^
+E       
+E       + [<app.player.Player object at 0x0000028F00772710>,
+E       ? ^
+E       
+E       +  <app.player.Player object at 0x0000028F007D5A90>,
+E          <app.player.Player object at 0x0000028F007725D0>]
+
+player_test.py:25: AssertionError
 ```
 
 Why did the test fail (note: if it doesn't fail, it means there is something you have already done before you were asked to - you need to figure out what that is!)?
 
-> Answer here
+> When objects are compared for equality, They are implemented to compare the objects by its reference in memory rather than the object content. Since the two objects compared 
+> are stored in different place in memory, the test fails. Therefore, the magic method which implements the objects comparison by default needs to be overridden for the test to pass.git  
 
 Add the necessary code to the Player class to ensure that the `test_sort_players` test passes.
 

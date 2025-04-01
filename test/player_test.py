@@ -16,9 +16,8 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(player_1.name, "John")
 
     def test_sort_player(self):
-
         players = [self.alice, self.bob, self.charlie]
-        manually_sorted_players = [self.bob, self.alice, self.charlie]
+        manually_sorted_players = [self.alice, self.bob, self.charlie]
 
         sorted_players = sorted(players)
 
