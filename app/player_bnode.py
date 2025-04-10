@@ -17,7 +17,7 @@ class PlayerBNode:
 
     @property
     def right(self):
-        return self.right
+        return self._right
 
     @left.setter
     def left(self, player: Player):

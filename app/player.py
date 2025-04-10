@@ -96,6 +96,9 @@ class Player:
     def __gt__(self, other: 'Player') -> bool:
         return self.score > other.score
 
+    def __ge__(self, other: 'Player') -> bool:
+        return self.score >= other.score
+
     def __repr__(self):
         class_name = type(self).__name__
         return f"{class_name}({self.score})"
