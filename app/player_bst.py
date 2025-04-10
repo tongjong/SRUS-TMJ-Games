@@ -17,9 +17,21 @@ class PlayerBST:
         else:
             return self._insert_bnode(self._root, player)
 
+    def search(self, name: str) -> Player | None:
+        return self._search_bnode(self._root, name)
+
+    def _search_bnode(self, root: PlayerBNode, name: str) -> Player | bool:
+        if root is None:
+            return False
+        if root.player.name.upper() == name.upper():
+            return root.player
+        if name.upper() < root.player.name.upper():
+            return self._search_bnode(root.left, name)
+        else:
+            return self._search_bnode(root.right, name)
 
     def _insert_bnode(self, root: PlayerBNode, player: Player) -> PlayerBNode:
-        if player < root.player:
+        if player.name < root.player.name:
             if root.left is None:
                 root.left = PlayerBNode(player)
                 return root.left
@@ -33,18 +45,5 @@ class PlayerBST:
                 return self._insert_bnode(root.right, player)
 
 
-if __name__ == '__main__':
-    dan = Player('04', "Dan", 25)
-    alice = Player('01', "Alice", 5)
-    bob = Player('02', "Bob", 10)
-    charlie = Player('03', "Charlie", 15)
-    player_bst = PlayerBST()
-
-    dan_node = player_bst.insert(dan)
-    alice_node = player_bst.insert(alice)
-    bob_node = player_bst.insert(bob)
-    charlie_node = player_bst.insert(charlie)
-
-    print(dan_node.left.player.name)
 
 

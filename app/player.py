@@ -84,9 +84,6 @@ class Player:
     def __hash__(self) -> int:
         return self._pearson_hash(self._uid)
 
-    def __eq__(self, player: 'Player') -> bool:
-        return self.uid == player.uid
-
     def __str__(self):
         return f'Unique Id: {self.uid}, Player Name: {self.name}'
 
